@@ -38,7 +38,7 @@ public class MoviesController : ControllerBase
         return CreatedAtAction(nameof(Get), new { idOrSlug = movie.Id }, movie.MapToResponse());
     }
 
-    [AllowAnonymous]
+
     [HttpGet(ApiEndpoints.Movies.Get)]
     //[ResponseCache(Duration = 30, VaryByHeader = "Accept, Accept-Encoding", Location = ResponseCacheLocation.Any)]
     [OutputCache(PolicyName = "MovieCache")]
@@ -85,7 +85,7 @@ public class MoviesController : ControllerBase
         return Ok(response);
     }
 
-    [AllowAnonymous]
+    
     [HttpGet(ApiEndpoints.Movies.GetAll)]
     //[ResponseCache(Duration = 30, VaryByQueryKeys = new []{"title", "year", "sortBy", "page", "pageSize"}, VaryByHeader = "Accept, Accept-Encoding", Location = ResponseCacheLocation.Any)]
     [OutputCache(PolicyName = "MovieCache")]

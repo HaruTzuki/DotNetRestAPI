@@ -69,10 +69,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddOutputCache(x =>
 {
     x.AddBasePolicy(c => c.Cache());
-    x.AddPolicy("MovieCache", c => c.Cache()
-        .Expire(TimeSpan.FromMinutes(1))
-        .SetVaryByQuery("title", "year", "sortBy", "page", "pageSize")
-        .Tag("movies"));
+    x.AddPolicy("MovieCache", c => 
+        c.Cache()
+            .Expire(TimeSpan.FromMinutes(1))
+            .SetVaryByQuery(new[] { "title", "year", "sortBy", "page", "pageSize" })
+            .Tag("movies"));
 });
 
 builder.Services.AddHealthChecks()
@@ -96,17 +97,14 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
-
 app.MapHealthChecks("_health");
-
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 //app.UseCors();
 //app.UseResponseCaching();
-app.UseOutputCache();
+app.UseOutputCache(); // By default, it caches 200 OK responses
 
 app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
