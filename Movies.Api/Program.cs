@@ -61,6 +61,8 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddResponseCaching();
+
 builder.Services.AddHealthChecks()
     .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
 builder.Services.AddApplication();
@@ -89,6 +91,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseResponseCaching();
 
 app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
